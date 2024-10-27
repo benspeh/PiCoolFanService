@@ -14,6 +14,8 @@
 #!/bin/bash
 #dynamische temp steuerung + Log
 
+path_log = '/home/logs/deviceTemperature.txt'
+
 function fan_on () {
 #cpu temperature and dynamic
    local t1=$(($(cat /sys/class/thermal/thermal_zone0/temp)/1000))
@@ -76,10 +78,10 @@ function log () {
       file='/home/piFAN/temp_log.txt'
 
       if [ -f "$file" ]; then
-         echo ''$ts2';'$t1';'$t2';'$t3';'$st';'$sp%'' >>/home/piFAN/temp_log.txt
+         echo ''$ts2';'$t1';'$t2';'$t3';'$st';'$sp%'' >>/home/logs/deviceTemperature.txt
          echo ''$ts2';'$t1';'$t2';'$t3';'$st';'$sp%''
       else
-         echo 'datetime;temp_cpu;temp_gpu;temp_board;status;speed' >>/home/piFAN/temp_log.txt
+         echo 'datetime;temp_cpu;temp_gpu;temp_board;status;speed' >>/home/logs/deviceTemperature_log.txt
       fi
 #   fi
 }
