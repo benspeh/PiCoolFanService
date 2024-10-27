@@ -1,0 +1,16 @@
+[Unit]
+Description=My High-Priority Script Service
+After=network.target
+
+[Service]
+ExecStart=/home/my-git-repositories/dynamicI2CoolingRasPi.sh
+Restart=always
+RestartSec=5
+User=ubuntu
+Nice=-10
+LimitNICE=-10
+IOSchedulingClass=2
+IOSchedulingPriority=4
+
+[Install]
+WantedBy=multi-user.target
