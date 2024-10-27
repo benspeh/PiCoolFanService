@@ -3,7 +3,7 @@ Description=My High-Priority Script Service
 After=network.target
 
 [Service]
-ExecStart=/home/my-git-repositories/dynamicI2CoolingRasPi.sh
+ExecStart=/home/my-git-repositories/RaspIrrigation/dynamicI2CoolingRasPi.sh
 Restart=always
 RestartSec=5
 User=ubuntu
