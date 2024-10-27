@@ -79,10 +79,10 @@ function log () {
       file='/home/piFAN/temp_log.txt'
 
       if [ -f "$file" ]; then
-         echo ''$ts2';'$t1';'$t2';'$t3';'$st';'$sp%'' >>$path_log
+         echo ''$ts2';'$t1';'$t2';'$t3';'$st';'$sp%'' >>"$path_log"
          echo ''$ts2';'$t1';'$t2';'$t3';'$st';'$sp%''
       else
-         echo 'datetime;temp_cpu;temp_gpu;temp_board;status;speed' >>$path_log
+         echo 'datetime;temp_cpu;temp_gpu;temp_board;status;speed' >>"$path_log"
 #   fi
 }
 
