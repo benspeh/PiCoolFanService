@@ -14,11 +14,11 @@
 #!/bin/bash
 #dynamische temp steuerung + Log
 
-path_log = '/home/logs/deviceTemperature.txt'
-
+path_log = "/home/logs/deviceTemperature.txt"
+temperature_cpu = "/sys/class/thermal/thermal_zone0/temp"
 function fan_on () {
 #cpu temperature and dynamic
-   local t1=$(($(cat /sys/class/thermal/thermal_zone0/temp)/1000))
+   local t1=$(($(cat $temperature_cpu)/1000))
 
    if [ $t1 -ge 46 -a $t1 -le 50 ]; then
        sudo i2ctools.i2cset -y 1 0x6C 1 2
@@ -32,7 +32,7 @@ function fan_on () {
 }
 
 function fan_off () {
-   local t1=$(($(cat /sys/class/thermal/thermal_zone0/temp)/1000))
+   local t1=$(($(cat $temperature_cpu)/1000))
 
    if [ $t1 -le 40 ]; then
        sudo i2ctools.i2cset -y 1 0x6C 1 0
@@ -44,7 +44,7 @@ function log () {
    local ts2=`date +%F_%H-%M-%S`
    local f1=$`sudo i2ctools.i2cget -y 1 0x6C 1 c`
    local f1=${f1:4:1}
-   local t1=`cat /sys/class/thermal/thermal_zone0/temp`
+   local t1=`cat $temperature_cpu`
    local t1=`echo "scale=2; "\`echo ${t1##*=}\`" / 1000" | bc`
    local t2=`vcgencmd measure_temp`
    local t2=${t2:5:4}
@@ -78,11 +78,10 @@ function log () {
       file='/home/piFAN/temp_log.txt'
 
       if [ -f "$file" ]; then
-         echo ''$ts2';'$t1';'$t2';'$t3';'$st';'$sp%'' >>/home/logs/deviceTemperature.txt
+         echo ''$ts2';'$t1';'$t2';'$t3';'$st';'$sp%'' >>$path_log
          echo ''$ts2';'$t1';'$t2';'$t3';'$st';'$sp%''
       else
-         echo 'datetime;temp_cpu;temp_gpu;temp_board;status;speed' >>/home/logs/deviceTemperature_log.txt
-      fi
+         echo 'datetime;temp_cpu;temp_gpu;temp_board;status;speed' >>$path_log
 #   fi
 }
 
