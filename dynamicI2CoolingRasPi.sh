@@ -86,7 +86,7 @@ function log () {
 
 # set unconditional FAN ON
 sudo i2ctools.i2cset -y 1 0x6C 0 1;
-sudo i2ctools.i2cset -y 1 0x6C 4 46
+
 while true
 do
 
