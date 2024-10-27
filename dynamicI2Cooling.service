@@ -1,5 +1,5 @@
 [Unit]
-Description=My High-Priority Script Service
+Description=High-Priority Raspberry PiCoolFan Service
 After=network.target
 
 [Service]
