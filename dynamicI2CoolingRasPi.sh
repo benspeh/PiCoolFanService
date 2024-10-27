@@ -16,6 +16,7 @@
 
 path_log = "/home/logs/deviceTemperature.txt"
 temperature_cpu = "/sys/class/thermal/thermal_zone0/temp"
+
 function fan_on () {
 #cpu temperature and dynamic
    local t1=$(($(cat $temperature_cpu)/1000))
