@@ -1,3 +1,4 @@
+#!/bin/bash
 # Raspberry cooling i2c module including environmental temperature, cpu temperature and fan controle on ubuntu core 24
 
 ## activate i2c bus 
