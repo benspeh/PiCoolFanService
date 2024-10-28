@@ -83,6 +83,9 @@ function log () {
       else
          echo 'datetime;temp_cpu;temp_environment;status;speed' >>"$path_log"
       fi
+  else
+    sp="NA"
+    st="NA"
   fi
 }
 
