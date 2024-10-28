@@ -35,7 +35,7 @@ function fan_on () {
 function fan_off () {
    local t1=$(($(cat "$temperature_cpu")/1000))
 
-   if [ $t1 -le 40 ]; then
+   if [ $t1 -le 45 ]; then
        sudo i2ctools.i2cset -y 1 0x6C 1 0
    fi
 }
