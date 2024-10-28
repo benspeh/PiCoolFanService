@@ -1,5 +1,5 @@
 cd /home/my-git-repositories/RaspIrrigation
-
+sudo docker run --rm -v "$PWD":/repo -w /repo alpine/git reset --hard
 sudo docker run --rm -v "$PWD":/repo -w /repo alpine/git pull origin main
 
 sudo systemctl stop dynamicI2Cooling.service
