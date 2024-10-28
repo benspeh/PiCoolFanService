@@ -4,6 +4,7 @@ After=network.target
 
 [Service]
 ExecStart=/home/my-git-repositories/RaspIrrigation/dynamicI2CoolingRasPi.sh
+WorkingDirectory=/home/my-git-repositories/RaspIrrigation
 Restart=always
 RestartSec=5
 User=benspeh357
