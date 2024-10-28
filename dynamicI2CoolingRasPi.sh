@@ -97,7 +97,7 @@ fan_on ;
 fan_off;
 log;
 # sleep
-sleep 15s;
+sleep 20s;
 
 done
 
