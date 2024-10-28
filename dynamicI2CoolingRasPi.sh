@@ -47,10 +47,9 @@ function log () {
    local f1=${f1:4:1}
    local t1=`cat $temperature_cpu`
    local t1=`echo "scale=2; "\`echo ${t1##*=}\`" / 1000" | bc`
-   local t2=`vcgencmd measure_temp`
-   local t2=${t2:5:4}
-   local t3=$`sudo i2ctools.i2cget -y 1 0x6C 2 c`
-   local t3=${t3:3:2}
+
+   local t2=$`sudo i2ctools.i2cget -y 1 0x6C 2 c`
+   local t2=${t2:3:2}
 
 
 
@@ -80,10 +79,10 @@ function log () {
       file='/home/piFAN/temp_log.txt'
 
       if [ -f "$file" ]; then
-         echo ''$ts2';'$t1';'$t2';'$t3';'$st';'$sp%'' >>"$path_log"
-         echo ''$ts2';'$t1';'$t2';'$t3';'$st';'$sp%''
+         echo ''$ts2';'$t1';'$t2';'$st';'$sp%'' >>"$path_log"
+         echo ''$ts2';'$t1';'$t2';'$st';'$sp%''
       else
-         echo 'datetime;temp_cpu;temp_gpu;temp_board;status;speed' >>"$path_log"
+         echo 'datetime;temp_cpu;temp_environment;status;speed' >>"$path_log"
       fi
   fi
 }
