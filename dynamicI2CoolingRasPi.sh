@@ -12,7 +12,6 @@
 # sudo i2ctools.i2cdetect -y 1
 #https://www.pimodules.com/_pdf/PCFM_V1.05.pdf
 
-#!/bin/bash
 #dynamische temp steuerung + Log
 
 path_log="/home/logs/deviceTemperature.txt";
