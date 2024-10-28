@@ -9,7 +9,7 @@ sudo cp dynamicI2Cooling.service /etc/systemd/system/dynamicI2Cooling.service
 
 sudo chmod +x /home/my-git-repositories/RaspIrrigation/dynamicI2CoolingRasPi.sh
 sudo chmod +x /home/my-git-repositories/RaspIrrigation/Update_dynamicI2CoolingService.sh
-
+sudo chmod +x /etc/systemd/system/dynamicI2Cooling.service
 
 sudo systemctl daemon-reload
 sudo systemctl restart dynamicI2Cooling.service
