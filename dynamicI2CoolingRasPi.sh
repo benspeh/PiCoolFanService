@@ -21,13 +21,13 @@ function fan_on () {
 #cpu temperature and dynamic
    local t1=$(($(cat "$temperature_cpu")/1000))
 
-   if [ $t1 -ge 46 -a $t1 -le 50 ]; then
+   if [ $t1 -ge 51 -a $t1 -le 55 ]; then
        sudo i2ctools.i2cset -y 1 0x6C 1 2
-   elif [ $t1 -ge 51 -a $t1 -le 55 ]; then
-       sudo i2ctools.i2cset -y 1 0x6C 1 3
    elif [ $t1 -ge 56 -a $t1 -le 60 ]; then
+       sudo i2ctools.i2cset -y 1 0x6C 1 3
+   elif [ $t1 -ge 61 -a $t1 -le 65 ]; then
        sudo i2ctools.i2cset -y 1 0x6C 1 4
-   elif [ $t1 -gt 60 ]; then
+   elif [ $t1 -gt 65 ]; then
        sudo i2ctools.i2cset -y 1 0x6C 1 1
    fi
 }
