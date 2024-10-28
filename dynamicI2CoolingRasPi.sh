@@ -45,9 +45,10 @@ function log () {
    local ts2=`date +%F_%H-%M-%S`
    local f1=$`sudo i2ctools.i2cget -y 1 0x6C 1 c`
    local f1=${f1:4:1}
-   local t1_get=`cat "$temperature_cpu"`
    
-   local t1=$(echo "$t1_get / 1000" | awk '{ printf "%.2f", $1 }')
+   local t1_get=`cat "$temperature_cpu"`
+   local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get / 1000 }")
+   
    local t2=$`sudo i2ctools.i2cget -y 1 0x6C 2 c`
    local t2=${t2:3:2}
 
