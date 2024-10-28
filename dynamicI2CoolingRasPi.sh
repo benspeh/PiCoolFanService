@@ -14,8 +14,8 @@
 #!/bin/bash
 #dynamische temp steuerung + Log
 
-path_log="/home/logs/deviceTemperature.txt"
-temperature_cpu="/sys/class/thermal/thermal_zone0/temp"
+path_log="/home/logs/deviceTemperature.txt";
+temperature_cpu="/sys/class/thermal/thermal_zone0/temp";
 
 function fan_on () {
 #cpu temperature and dynamic
