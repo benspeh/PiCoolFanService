@@ -54,7 +54,7 @@ function log () {
 
 
 
-   if [ $f1 -eq 1 -o $f1 -eq 2 -o $f1 -eq 3 -o $f1 -eq 4 ]; then
+#   if [ $f1 -eq 1 -o $f1 -eq 2 -o $f1 -eq 3 -o $f1 -eq 4 ]; then
 
       if [ $f1 -eq 0 ]; then
          sp="0"
@@ -75,6 +75,7 @@ function log () {
          sp="NA"
          st="NA"
       fi
+      
       #logfile
       file='/home/piFAN/temp_log.txt'
 
@@ -84,6 +85,7 @@ function log () {
       else
          echo 'datetime;temp_cpu;temp_gpu;temp_board;status;speed' >>"$path_log"
       fi
+  #fi
 }
 
 # set unconditional FAN ON
