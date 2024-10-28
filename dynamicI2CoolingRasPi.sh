@@ -52,7 +52,7 @@ function log () {
    local t2=${t2:3:2}
 
 
-   if [$f1 -eq 0 -o $f1 -eq 1 -o $f1 -eq 2 -o $f1 -eq 3 -o $f1 -eq 4 ]; then
+   if [ $f1 -eq 0 -o $f1 -eq 1 -o $f1 -eq 2 -o $f1 -eq 3 -o $f1 -eq 4 ]; then
 
       if [ $f1 -eq 0 ]; then
          sp="0"
