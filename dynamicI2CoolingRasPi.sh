@@ -19,7 +19,7 @@ temperature_cpu="/sys/class/thermal/thermal_zone0/temp";
 
 function fan_on () {
 #cpu temperature and dynamic
-   local t1=$(($(cat $temperature_cpu)/1000))
+   local t1=$(($(cat "$temperature_cpu")/1000))
 
    if [ $t1 -ge 46 -a $t1 -le 50 ]; then
        sudo i2ctools.i2cset -y 1 0x6C 1 2
@@ -33,7 +33,7 @@ function fan_on () {
 }
 
 function fan_off () {
-   local t1=$(($(cat $temperature_cpu)/1000))
+   local t1=$(($(cat "$temperature_cpu")/1000))
 
    if [ $t1 -le 40 ]; then
        sudo i2ctools.i2cset -y 1 0x6C 1 0
@@ -52,8 +52,7 @@ function log () {
    local t2=${t2:3:2}
 
 
-
-   if [ $f1 -eq 1 -o $f1 -eq 2 -o $f1 -eq 3 -o $f1 -eq 4 ]; then
+   if [$f1 -eq 0 -o $f1 -eq 1 -o $f1 -eq 2 -o $f1 -eq 3 -o $f1 -eq 4 ]; then
 
       if [ $f1 -eq 0 ]; then
          sp="0"
