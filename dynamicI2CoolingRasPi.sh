@@ -45,7 +45,7 @@ function log () {
    local ts2=`date +%F_%H-%M-%S`
    local f1=$`sudo i2ctools.i2cget -y 1 0x6C 1 c`
    local f1=${f1:4:1}
-   local t1=`cat $temperature_cpu`
+   local t1=`cat "$temperature_cpu"`
    local t1=`echo "scale=2; "\`echo ${t1##*=}\`" / 1000" | bc`
 
    local t2=$`sudo i2ctools.i2cget -y 1 0x6C 2 c`
@@ -76,9 +76,8 @@ function log () {
       fi
       
       #logfile
-      file='/home/piFAN/temp_log.txt'
-
-      if [ -f "$file" ]; then
+      
+      if [ -f "$path_log" ]; then
          echo ''$ts2';'$t1';'$t2';'$st';'$sp%'' >>"$path_log"
          echo ''$ts2';'$t1';'$t2';'$st';'$sp%''
       else
