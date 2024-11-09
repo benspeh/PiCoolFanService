@@ -1,4 +1,4 @@
-cd /home/my-git-repositories/RaspIrrigation
+cd /home/my-git-repositories/PiCoolFanService
 
 sudo systemctl stop dynamicI2Cooling.service
 
