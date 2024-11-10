@@ -16,13 +16,13 @@ sudo i2ctools.i2cdetect -y 1
 ## Install repo
 snap install docker
 
-sudo mkdir -p /home/git-repositories
+#sudo mkdir -p /home/"your-git-code-directory-here"
 
-cd /home/git-repositories/
+cd /home/"your-git-code-directory-here"
 
 sudo docker run --rm -v "$PWD":/repo -w /repo alpine/git clone https://github.com/benspeh/PiCoolFanService.git
 
-cd /home/git-repositories/PiCoolFanService
+cd ./PiCoolFanService
 
 sudo chmod +x ./setup_dynamicI2CoolingService.sh
 
