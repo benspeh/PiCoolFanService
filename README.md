@@ -2,7 +2,7 @@
 
 Service running on raspberry pi 3b+ ubuntu core 24 to controle and log pimodule.com PiCoolFan I2C module ([Instructions.pdf](https://www.pimodules.com/_pdf/PCFM_V1.05.pdf))
 
-## Activate I2C
+## Activate I2C bus
 ### ubuntu core 24 RaspberryPi Model 3B+ 
 sudo snap install i2ctools --edge
 
