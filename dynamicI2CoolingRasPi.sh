@@ -97,7 +97,7 @@ do
 # eval functions
 fan_on ;
 fan_off;
-#log;
+log;
 # sleep
 sleep 20s;
 
