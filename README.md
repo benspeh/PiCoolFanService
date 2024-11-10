@@ -13,4 +13,4 @@ sudo docker run --rm -v "$PWD":/repo -w /repo alpine/git clone https://github.co
 
 sudo chmod +x ./install_dynamicI2CoolingService.sh
 
-sudo ./install_dynamicI2CoolingService.sh
+sudo ./setup_dynamicI2CoolingService.sh
