@@ -7,8 +7,8 @@ sudo docker run --rm -v "$PWD":/repo -w /repo alpine/git pull origin main
 
 sudo cp dynamicI2Cooling.service /etc/systemd/system/dynamicI2Cooling.service
 
-sudo chmod +x /home/my-git-repositories/PiCoolFanService/dynamicI2CoolingRasPi.sh
-sudo chmod +x /home/my-git-repositories/PiCoolFanService/Update_dynamicI2CoolingService.sh
+sudo chmod +x ./dynamicI2CoolingRasPi.sh
+sudo chmod +x ./Update_dynamicI2CoolingService.sh
 sudo chmod +x /etc/systemd/system/dynamicI2Cooling.service
 
 sudo systemctl daemon-reload
