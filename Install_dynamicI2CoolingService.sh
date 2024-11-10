@@ -1,5 +1,3 @@
-sudo mkdir -p /home/my-git-repositories/PiCoolFanService
-
 cd /home/my-git-repositories/PiCoolFanService
 
 sudo cp dynamicI2Cooling.service /etc/systemd/system/dynamicI2Cooling.service
