@@ -13,7 +13,7 @@
 
 #dynamische temp steuerung + Log
 
-#path_log="/home/logs/deviceTemperature.txt";
+path_log="/home/logs/deviceTemperature.txt";
 temperature_cpu="/sys/class/thermal/thermal_zone0/temp";
 
 function fan_on () {
