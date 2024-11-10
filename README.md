@@ -11,4 +11,6 @@ cd /home/git-repositories/PiCoolFanService
 
 sudo docker run --rm -v "$PWD":/repo -w /repo alpine/git clone https://github.com/benspeh/PiCoolFanService.git
 
-chmod -x 
+sudo chmod +x ./install_dynamicI2CoolingService.sh
+
+./install_dynamicI2CoolingService.sh
