@@ -5,8 +5,8 @@ Service running on raspberry pi 3b+ ubuntu core 24 to controle and log pimodule.
 ## Install
 snap install docker
 
-sudo mkdir -p /home/my-git-repositories/PiCoolFanService
+sudo mkdir -p /home/git-repositories/PiCoolFanService
 
+cd /home/git-repositories/PiCoolFanService
 
-
-sudo docker run --rm -v /home/my-git-repositories:/repo -w /repo alpine/git clone https://github.com/benspeh/PiCoolFanService.git
+sudo docker run --rm -v "$PWD":/repo -w /repo alpine/git clone https://github.com/benspeh/PiCoolFanService.git
