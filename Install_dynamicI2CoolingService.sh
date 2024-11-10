@@ -1,9 +1,6 @@
+sudo mkdir -p /home/my-git-repositories/PiCoolFanService
+
 cd /home/my-git-repositories/PiCoolFanService
-
-sudo systemctl stop dynamicI2Cooling.service
-
-sudo docker run --rm -v "$PWD":/repo -w /repo alpine/git reset --hard
-sudo docker run --rm -v "$PWD":/repo -w /repo alpine/git pull origin main
 
 sudo cp dynamicI2Cooling.service /etc/systemd/system/dynamicI2Cooling.service
 
@@ -12,5 +9,6 @@ sudo chmod +x /home/my-git-repositories/PiCoolFanService/Update_dynamicI2Cooling
 sudo chmod +x /etc/systemd/system/dynamicI2Cooling.service
 
 sudo systemctl daemon-reload
-sudo systemctl restart dynamicI2Cooling.service
+sudo systemctl enable dynamicI2Cooling.service
+sudo systemctl start dynamicI2Cooling.service
 sudo systemctl status dynamicI2Cooling.service
