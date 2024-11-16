@@ -19,7 +19,7 @@ temperature_cpu="/sys/class/thermal/thermal_zone0/temp";
 function fan_on () {
 #cpu temperature and dynamic
    local t1=$(($(cat "$temperature_cpu")/1000))
-
+   echo "t1: $t1"
    if [ $t1 -ge 51 -a $t1 -le 55 ]; then
        i2ctools.i2cset -y 1 0x6C 1 2
    elif [ $t1 -ge 56 -a $t1 -le 60 ]; then
