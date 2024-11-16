@@ -17,8 +17,11 @@ path_log="/home/logs/deviceTemperature.txt";
 temperature_cpu="/sys/class/thermal/thermal_zone0/temp";
 
 function read_values() {
-    local t1_get=$(($(cat "$temperature_cpu")/1000))
-    local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get }")  # CPU temperature in °C
+    local ts2=`date +%F_%H-%M-%S`
+
+    local t1_get=$(($(cat "$temperature_cpu")))
+    local t1_base=$(($t1_get / 1000))  
+    local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get / 1000 }")  # CPU temperature in °C
 
     local t2=$(`i2ctools.i2cget -y 1 0x6C 2 c`)
     local t2=${t2:3:2}  # Environmental temperature from the i2c device
@@ -27,44 +30,37 @@ function read_values() {
     local f1=${f1:4:1}  # Fan speed state (0-4)
 
     # Return the values
-    echo "$t1_get $t1 $t2 $f1"
+    echo "$ ts2 $t1_base $t1 $t2 $f1"
 }
 
 function fan_on () {
-#cpu temperature and dynamic
-   local t1=$(($(cat "$temperature_cpu")/1000))
-   echo "t1: $t1"
-   if [ $t1 -ge 51 -a $t1 -le 55 ]; then
+   #cpu temperature and dynamic
+   local t1=$1
+   if [ $t1_get -ge 51 -a $t1_get -le 55 ]; then
        i2ctools.i2cset -y 1 0x6C 1 2
-   elif [ $t1 -ge 56 -a $t1 -le 60 ]; then
+   elif [ $t1_get -ge 56 -a $t1_get -le 60 ]; then
        i2ctools.i2cset -y 1 0x6C 1 3
-   elif [ $t1 -ge 61 -a $t1 -le 65 ]; then
+   elif [ $t1_get -ge 61 -a $t1_get -le 65 ]; then
        i2ctools.i2cset -y 1 0x6C 1 4
-   elif [ $t1 -gt 65 ]; then
+   elif [ $t1_get -gt 65 ]; then
        i2ctools.i2cset -y 1 0x6C 1 1
    fi
 }
 
 function fan_off () {
-   local t1=$(($(cat "$temperature_cpu")/1000))
-
-   if [ $t1 -le 45 ]; then
+   local t1=$1
+   if [ $t1_get -le 45 ]; then
        sudo i2ctools.i2cset -y 1 0x6C 1 0
    fi
 }
 
 function log () {
-
-   local ts2=`date +%F_%H-%M-%S`
-   
-   local t1_get=`cat "$temperature_cpu"`
-   local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get / 1000 }")
-   
-   local t2=$`i2ctools.i2cget -y 1 0x6C 2 c`
-   local t2=${t2:3:2}
-   
-   local f1=$`i2ctools.i2cget -y 1 0x6C 1 c`
-   local f1=${f1:4:1}
+    local ts2=$1
+    local t1=$2
+    local t2=$3
+    local f1=$4
+    local sp=""
+    local st=""
    
    if [[ $f1 -eq 0 || $f1 -eq 1 || $f1 -eq 2 || $f1 -eq 3 || $f1 -eq 4 ]]; then
 
@@ -107,13 +103,18 @@ i2ctools.i2cset -y 1 0x6C 0 1;
 
 while true
 do
-
-# eval functions
-fan_on;
-fan_off;
-log;
-# sleep
-sleep 20s;
+# Read values once at the start
+    read_values_output=$(read_values)
+    
+    # Split the output into individual values
+    read -r ts2 t1_base t1 t2 f1 <<< "$read_values_output"
+    
+    # Use the measured values in the fan control and logging function
+    fan_on $t1_base
+    fan_off $t1_base
+    log $ts2 $t1 $t2 $f1
+    # sleep
+    sleep 20s;
 
 done
 
