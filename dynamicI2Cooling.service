@@ -8,7 +8,7 @@ WorkingDirectory=/home/git-repositories/PiCoolFanService
 Environment=PATH=/usr/bin:/usr/local/bin:/bin:/sbin:/snap/bin
 Restart=always
 RestartSec=5
-User=benspeh357
+User=root
 Nice=-10
 LimitNICE=-10
 IOSchedulingClass=2
