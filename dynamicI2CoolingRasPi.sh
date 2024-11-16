@@ -20,7 +20,7 @@ function read_values() {
     local ts2=`date +%F_%H-%M-%S`
 
     local t1_get=$(cat "$temperature_cpu")
-    local t1_base=$(($t1_get / 1000))
+    local t1_base=$($t1_get / 1000)
     
     local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get / 1000 }")  # CPU temperature in °C
     
