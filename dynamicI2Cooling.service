@@ -14,6 +14,8 @@ LimitNICE=-10
 IOSchedulingClass=2
 IOSchedulingPriority=4
 CapabilityBoundingSet=CAP_SYS_RAWIO
+AmbientCapabilities=CAP_SYS_RAWIO
+DeviceAllow=/dev/i2c-1 rw
 
 [Install]
 WantedBy=multi-user.target
