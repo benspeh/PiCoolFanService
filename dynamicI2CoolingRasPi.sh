@@ -25,28 +25,26 @@ function read_values() {
     local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get / 1000 }")  # CPU temperature in °C
     
     local t2=$(i2ctools.i2cget -y 1 0x6C 2 c)
-    local t2=${t2:1}  
+    local t2=${t2#0x}  
 
     local f1=$(i2ctools.i2cget -y 1 0x6C 1 c)
     local f1=${f1:3:1}  
-
 
     # Return the values
     echo "$ts2 $t1_base $t1 $t2 $f1"
 }
 
-function fan_on () {
-   #cpu temperature and dynamic
-   local t1_base=$1
-   if [ $t1_base -ge 51 -a $t1_base -le 55 ]; then
-       i2ctools.i2cset -y 1 0x6C 1 2
-   elif [ $t1_base -ge 56 -a $t1_base -le 60 ]; then
-       i2ctools.i2cset -y 1 0x6C 1 3
-   elif [ $t1_base -ge 61 -a $t1_base -le 65 ]; then
-       i2ctools.i2cset -y 1 0x6C 1 4
-   elif [ $t1_base -gt 65 ]; then
-       i2ctools.i2cset -y 1 0x6C 1 1
-   fi
+fan_on() {
+    t1_base=$1
+    if [ "$t1_base" -ge 51 ] && [ "$t1_base" -le 55 ]; then
+        i2ctools.i2cset -y 1 0x6C 1 2  # Set fan speed to 25%
+    elif [ "$t1_base" -ge 56 ] && [ "$t1_base" -le 60 ]; then
+        i2ctools.i2cset -y 1 0x6C 1 3  # Set fan speed to 50%
+    elif [ "$t1_base" -ge 61 ] && [ "$t1_base" -le 65 ]; then
+        i2ctools.i2cset -y 1 0x6C 1 4  # Set fan speed to 75%
+    elif [ "$t1_base" -gt 65 ]; then
+        i2ctools.i2cset -y 1 0x6C 1 1  # Set fan speed to 100%
+    fi
 }
 
 function fan_off () {
@@ -64,36 +62,22 @@ function log () {
     local sp=""
     local st=""
 
-    echo "f1 value in log function: '$f1'"
-   #if [[ $f1 -eq 0 || $f1 -eq 1 || $f1 -eq 2 || $f1 -eq 3 || $f1 -eq 4 ]]; then
-        if [ $f1 -eq 0 ]; then
-            sp="0"
-            st="off"
-        elif [ $f1 -eq 2 ]; then
-            sp="25"
-            st="on"
-        elif [ $f1 -eq 3 ]; then
-            sp="50"
-            st="on"
-        elif [ $f1 -eq 4 ]; then
-            sp="75"
-            st="on"
-        elif [ $f1 -eq 1 ]; then
-            sp="100"
-            st="on"
-        else
-            sp="NA"
-            st="NA"
-        fi
-       # fi
+    case "$f1" in
+        0) sp="0"; st="off" ;;
+        2) sp="25"; st="on" ;;
+        3) sp="50"; st="on" ;;
+        4) sp="75"; st="on" ;;
+        1) sp="100"; st="on" ;;
+        *) sp="NA"; st="NA" ;;
+    esac
       
-      #logfile
-      if [ -f "$path_log" ]; then
-         echo ''$ts2';'$t1';'$t2';'$st';'$sp%'' >>"$path_log"
-         echo ''$ts2';'$t1';'$t2';'$st';'$sp%''
-      else
-         echo 'datetime;temp_cpu;temp_environment;status;speed' >>"$path_log"
-      fi
+    #logfile
+    if [ -f "$path_log" ]; then
+       echo ''$ts2';'$t1';'$t2';'$st';'$sp%'' >>"$path_log"
+       echo ''$ts2';'$t1';'$t2';'$st';'$sp%''
+    else
+       echo 'datetime;temp_cpu;temp_environment;status;speed' >>"$path_log"
+    fi
 }
 
 # set unconditional FAN ON
