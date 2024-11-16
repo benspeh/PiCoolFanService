@@ -83,6 +83,7 @@ function log () {
             sp="NA"
             st="NA"
         fi
+        fi
       
       #logfile
       if [ -f "$path_log" ]; then
