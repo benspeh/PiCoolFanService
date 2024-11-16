@@ -35,14 +35,14 @@ function read_values() {
 
 function fan_on () {
    #cpu temperature and dynamic
-   local t1=$1
-   if [ $t1_get -ge 51 -a $t1_get -le 55 ]; then
+   local t1_base=$1
+   if [ $t1_base -ge 51 -a $t1_base -le 55 ]; then
        i2ctools.i2cset -y 1 0x6C 1 2
-   elif [ $t1_get -ge 56 -a $t1_get -le 60 ]; then
+   elif [ $t1_base -ge 56 -a $t1_base -le 60 ]; then
        i2ctools.i2cset -y 1 0x6C 1 3
-   elif [ $t1_get -ge 61 -a $t1_get -le 65 ]; then
+   elif [ $t1_base -ge 61 -a $t1_base -le 65 ]; then
        i2ctools.i2cset -y 1 0x6C 1 4
-   elif [ $t1_get -gt 65 ]; then
+   elif [ $t1_base -gt 65 ]; then
        i2ctools.i2cset -y 1 0x6C 1 1
    fi
 }
