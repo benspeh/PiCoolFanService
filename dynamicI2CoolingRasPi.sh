@@ -23,10 +23,10 @@ function read_values() {
     local t1_base=$((${t1_get%.*}))
     local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get / 1000 }")  # CPU temperature in °C
 
-    local t2=$(i2ctools.i2cget -y 1 0x6C 2 c)
+    local t2=$`i2ctools.i2cget -y 1 0x6C 2 c`
     local t2=${t2:3:2}  # Environmental temperature from the i2c device
 
-    local f1=$(i2ctools.i2cget -y 1 0x6C 1 c)
+    local f1=$`i2ctools.i2cget -y 1 0x6C 1 c`
     local f1=${f1:4:1}  # Fan speed state (0-4)
 
     # Return the values
