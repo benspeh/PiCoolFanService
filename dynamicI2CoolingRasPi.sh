@@ -62,7 +62,8 @@ function log () {
     local f1=$4
     local sp=""
     local st=""
-   
+
+    echo "f1 value in log function: '$f1'"
    #if [[ $f1 -eq 0 || $f1 -eq 1 || $f1 -eq 2 || $f1 -eq 3 || $f1 -eq 4 ]]; then
         if [ $f1 -eq 0 ]; then
             sp="0"
