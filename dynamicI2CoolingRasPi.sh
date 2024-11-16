@@ -16,6 +16,20 @@
 path_log="/home/logs/deviceTemperature.txt";
 temperature_cpu="/sys/class/thermal/thermal_zone0/temp";
 
+function read_values() {
+    local t1_get=$(($(cat "$temperature_cpu")/1000))
+    local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get }")  # CPU temperature in °C
+
+    local t2=$(`i2ctools.i2cget -y 1 0x6C 2 c`)
+    local t2=${t2:3:2}  # Environmental temperature from the i2c device
+
+    local f1=$(`i2ctools.i2cget -y 1 0x6C 1 c`)
+    local f1=${f1:4:1}  # Fan speed state (0-4)
+
+    # Return the values
+    echo "$t1_get $t1 $t2 $f1"
+}
+
 function fan_on () {
 #cpu temperature and dynamic
    local t1=$(($(cat "$temperature_cpu")/1000))
