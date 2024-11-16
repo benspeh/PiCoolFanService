@@ -24,12 +24,12 @@ function read_values() {
     
     local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get / 1000 }")  # CPU temperature in °C
     
-    local t2=$(i2ctools.i2cget -y 1 0x6C 2 c)
+    local t2=`i2ctools.i2cget -y 1 0x6C 2 c`
     local t2=${t2:3:2}  
 
-    local f1=$(i2ctools.i2cget -y 1 0x6C 1 c)
+    local f1=`i2ctools.i2cget -y 1 0x6C 1 c`
     local f1=${f1:4:1}  
-    echo "f1 value in read function: '$f1'"
+ 
 
     # Return the values
     echo "$ts2 $t1_base $t1 $t2 $f1"
