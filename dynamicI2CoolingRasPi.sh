@@ -58,7 +58,7 @@ function log () {
     local ts2=$1
     local t1=$2
     local t2=$3
-    local f1=$4
+    local f1=$((${4%.*}))
     local sp=""
     local st=""
    
