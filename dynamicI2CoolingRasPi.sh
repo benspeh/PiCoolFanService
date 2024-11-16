@@ -21,13 +21,13 @@ function fan_on () {
    local t1=$(($(cat "$temperature_cpu")/1000))
 
    if [ $t1 -ge 51 -a $t1 -le 55 ]; then
-       i2ctools.i2cset -y 1 0x6C 1 2
+       sudo i2ctools.i2cset -y 1 0x6C 1 2
    elif [ $t1 -ge 56 -a $t1 -le 60 ]; then
-       i2ctools.i2cset -y 1 0x6C 1 3
+       sudo i2ctools.i2cset -y 1 0x6C 1 3
    elif [ $t1 -ge 61 -a $t1 -le 65 ]; then
-       i2ctools.i2cset -y 1 0x6C 1 4
+       sudo i2ctools.i2cset -y 1 0x6C 1 4
    elif [ $t1 -gt 65 ]; then
-       i2ctools.i2cset -y 1 0x6C 1 1
+       sudo i2ctools.i2cset -y 1 0x6C 1 1
    fi
 }
 
@@ -35,14 +35,14 @@ function fan_off () {
    local t1=$(($(cat "$temperature_cpu")/1000))
 
    if [ $t1 -le 45 ]; then
-       i2ctools.i2cset -y 1 0x6C 1 0
+       sudo i2ctools.i2cset -y 1 0x6C 1 0
    fi
 }
 
 function log () {
 
    local ts2=`date +%F_%H-%M-%S`
-   local f1=$`i2ctools.i2cget -y 1 0x6C 1 c`
+   local f1=$`sudo i2ctools.i2cget -y 1 0x6C 1 c`
    echo "f1: $f1"
    local f1=${f1:4:1}
    echo "f1: $f1"
@@ -50,7 +50,7 @@ function log () {
    local t1_get=`cat "$temperature_cpu"`
    local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get / 1000 }")
    
-   local t2=$`i2ctools.i2cget -y 1 0x6C 2 c`
+   local t2=$`sudo i2ctools.i2cget -y 1 0x6C 2 c`
    local t2=${t2:3:2}
 
    if [ $f1 -eq 0 -o $f1 -eq 1 -o $f1 -eq 2 -o $f1 -eq 3 -o $f1 -eq 4 ]; then
@@ -90,7 +90,7 @@ function log () {
 }
 
 # set unconditional FAN ON
-i2ctools.i2cset -y 1 0x6C 0 1;
+sudo i2ctools.i2cset -y 1 0x6C 0 1;
 
 while true
 do
