@@ -35,7 +35,7 @@ function read_values() {
 
 function fan_on () {
    #cpu temperature and dynamic
-   local t1_base=$1
+   local t1_base=$((${$1%.*}))
    if [ $t1_base -ge 51 -a $t1_base -le 55 ]; then
        i2ctools.i2cset -y 1 0x6C 1 2
    elif [ $t1_base -ge 56 -a $t1_base -le 60 ]; then
@@ -48,8 +48,8 @@ function fan_on () {
 }
 
 function fan_off () {
-   local t1=$1
-   if [ $t1_get -le 45 ]; then
+   local t1_base=$((${t1%.*}))
+   if [ $t1_base -le 45 ]; then
        sudo i2ctools.i2cset -y 1 0x6C 1 0
    fi
 }
@@ -62,30 +62,16 @@ function log () {
     local sp=""
     local st=""
    
-   if [[ $f1 -eq 0 || $f1 -eq 1 || $f1 -eq 2 || $f1 -eq 3 || $f1 -eq 4 ]]; then
-
-      if [ $f1 -eq 0 ]; then
-         sp="0"
-	 st="off"
-      elif [ $f1 -eq 2 ]; then
-         sp="25"
-	 st="on"
-      elif [ $f1 -eq 3 ]; then
-         sp="50"
-	 st="on"
-      elif [ $f1 -eq 4 ]; then
-         sp="75"
-	 st="on"
-      elif [ $f1 -eq 1 ]; then
-         sp="100"
-	 st="on"
-      else
-         sp="NA"
-         st="NA"
-      fi
+   case "$f1" in
+        0) sp="0"; st="off" ;;
+        2) sp="25"; st="on" ;;
+        3) sp="50"; st="on" ;;
+        4) sp="75"; st="on" ;;
+        1) sp="100"; st="on" ;;
+        *) sp="NA"; st="NA" ;;
+    esac
       
       #logfile
-      
       if [ -f "$path_log" ]; then
          echo ''$ts2';'$t1';'$t2';'$st';'$sp%'' >>"$path_log"
          echo ''$ts2';'$t1';'$t2';'$st';'$sp%''
