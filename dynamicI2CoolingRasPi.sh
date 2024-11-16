@@ -95,9 +95,9 @@ while true
 do
 
 # eval functions
-log;
 fan_on;
 fan_off;
+log;
 # sleep
 sleep 20s;
 
