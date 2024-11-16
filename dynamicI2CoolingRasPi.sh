@@ -27,7 +27,7 @@ function read_values() {
     local t2=$`i2ctools.i2cget -y 1 0x6C 2 c`
     local t2=${t2:3:2}  
 
-    local f1=$i2ctools.i2cget -y 1 0x6C 1 c`
+    local f1=$`i2ctools.i2cget -y 1 0x6C 1 c`
     local f1=${f1:4:1}  
     echo "f1 value in read function: '$f1'"
 
