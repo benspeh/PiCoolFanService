@@ -50,7 +50,7 @@ function log () {
    local t1_get=`cat "$temperature_cpu"`
    local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get / 1000 }")
    
-   local t2=$`sudo i2ctools.i2cget -y 1 0x6C 2 c`
+   local t2=$`i2ctools.i2cget -y 1 0x6C 2 c`
    local t2=${t2:3:2}
 
    if [ $f1 -eq 0 -o $f1 -eq 1 -o $f1 -eq 2 -o $f1 -eq 3 -o $f1 -eq 4 ]; then
