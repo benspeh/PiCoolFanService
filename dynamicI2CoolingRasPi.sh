@@ -51,7 +51,7 @@ function fan_on () {
 function fan_off () {
    local t1_base=$1
    if [ $t1_base -le 45 ]; then
-       sudo i2ctools.i2cset -y 1 0x6C 1 0
+       i2ctools.i2cset -y 1 0x6C 1 0
    fi
 }
 
