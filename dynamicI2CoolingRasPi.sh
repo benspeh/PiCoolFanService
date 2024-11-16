@@ -16,7 +16,7 @@
 path_log="/home/logs/deviceTemperature.txt";
 temperature_cpu="/sys/class/thermal/thermal_zone0/temp";
 
-function read_values() {
+function read_values () {
     local ts2=`date +%F_%H-%M-%S`
 
     local t1_get=$(cat "$temperature_cpu")
@@ -34,7 +34,7 @@ function read_values() {
  #   echo "$ts2 $t1_base $t1 $t2 $f1"
 }
 
-function fan_on() {
+function fan_on () {
     t1_base=$1
     if [ $t1_base -ge 51 ] && [ $t1_base -le 55 ]; then
         i2ctools.i2cset -y 1 0x6C 1 2  # Set fan speed to 25%
@@ -47,14 +47,14 @@ function fan_on() {
     fi
 }
 
-function fan_off() {
+function fan_off () {
    local t1_base=$1
    if [ $t1_base -le 45 ]; then
        i2ctools.i2cset -y 1 0x6C 1 0
    fi
 }
 
-function log() {
+function log () {
     local ts2=$1
     local t1=$2
     local t2=$3
