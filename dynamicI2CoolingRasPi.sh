@@ -87,7 +87,7 @@ while true
 do
 # Read values once at the start
     read_values_output=$(read_values);
-    echo $read_values_output;
+   
     # Split the output into individual values
     read -r ts2 t1_base t1 t2 f1 <<< "$read_values_output";
     
