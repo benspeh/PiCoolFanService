@@ -8,11 +8,12 @@ WorkingDirectory=/home/git-repositories/PiCoolFanService
 Environment=PATH=/usr/bin:/usr/local/bin:/bin:/sbin
 Restart=always
 RestartSec=5
-User=root
+User=benspeh357
 Nice=-10
 LimitNICE=-10
 IOSchedulingClass=2
 IOSchedulingPriority=4
+CapabilityBoundingSet=CAP_SYS_RAWIO
 
 [Install]
 WantedBy=multi-user.target
