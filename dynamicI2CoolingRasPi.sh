@@ -63,7 +63,7 @@ function log () {
     local sp=""
     local st=""
    
-   if [[ $f1 -eq 0 || $f1 -eq 1 || $f1 -eq 2 || $f1 -eq 3 || $f1 -eq 4 ]]; then
+   #if [[ $f1 -eq 0 || $f1 -eq 1 || $f1 -eq 2 || $f1 -eq 3 || $f1 -eq 4 ]]; then
         if [ $f1 -eq 0 ]; then
             sp="0"
             st="off"
@@ -83,7 +83,7 @@ function log () {
             sp="NA"
             st="NA"
         fi
-        fi
+       # fi
       
       #logfile
       if [ -f "$path_log" ]; then
