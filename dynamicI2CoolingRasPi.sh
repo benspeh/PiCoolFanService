@@ -36,13 +36,13 @@ function read_values() {
 
 fan_on() {
     t1_base=$1
-    if [ "$t1_base" -ge 51 ] && [ "$t1_base" -le 55 ]; then
+    if [ $t1_base -ge 51 ] && [ $t1_base -le 55 ]; then
         i2ctools.i2cset -y 1 0x6C 1 2  # Set fan speed to 25%
-    elif [ "$t1_base" -ge 56 ] && [ "$t1_base" -le 60 ]; then
+    elif [ $t1_base -ge 56 ] && [ $t1_base -le 60 ]; then
         i2ctools.i2cset -y 1 0x6C 1 3  # Set fan speed to 50%
-    elif [ "$t1_base" -ge 61 ] && [ "$t1_base" -le 65 ]; then
+    elif [ $t1_base -ge 61 ] && [ $t1_base -le 65 ]; then
         i2ctools.i2cset -y 1 0x6C 1 4  # Set fan speed to 75%
-    elif [ "$t1_base" -gt 65 ]; then
+    elif [ $t1_base -gt 65 ]; then
         i2ctools.i2cset -y 1 0x6C 1 1  # Set fan speed to 100%
     fi
 }
