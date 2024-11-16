@@ -34,7 +34,7 @@ function read_values() {
     echo "$ts2 $t1_base $t1 $t2 $f1"
 }
 
-fan_on() {
+function fan_on() {
     t1_base=$1
     if [ $t1_base -ge 51 ] && [ $t1_base -le 55 ]; then
         i2ctools.i2cset -y 1 0x6C 1 2  # Set fan speed to 25%
