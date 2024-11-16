@@ -27,7 +27,7 @@ function read_values () {
     local t2=${t2#0x}  
 
     # Return the values
-    echo "$ts2 $t1_base $t1 $t2"
+    echo "$t1_base $t1 $t2"
 }
 
 
@@ -54,8 +54,8 @@ function fan_off () {
 
 function log () {
     local ts2=`date +%F_%H-%M-%S`
-    local t1=$2
-    local t2=$3
+    local t1=$1
+    local t2=$2
     local f1=$(i2ctools.i2cget -y 1 0x6C 1 c)
     local f1=${f1:3:1}  
     local sp=""
@@ -84,16 +84,15 @@ i2ctools.i2cset -y 1 0x6C 0 1;
 
 while true
 do
-# Read values once at the start
+    # Read values once at the start
     read_values_output=$(read_values);
-   
     # Split the output into individual values
-    read -r ts2 t1_base t1 t2 <<< "$read_values_output";
+    read -r t1_base t1 t2 <<< "$read_values_output";
     
     # Use the measured values in the fan control and logging function
     fan_on $t1_base;
     fan_off $t1_base;
-    log $ts2 $t1 $t2;
+    log $t1 $t2;
     # sleep
     sleep 20s;
 
