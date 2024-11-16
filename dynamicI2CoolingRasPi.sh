@@ -63,14 +63,26 @@ function log () {
     local sp=""
     local st=""
    
-   case "$f1" in
-        0) sp="0"; st="off" ;;
-        2) sp="25"; st="on" ;;
-        3) sp="50"; st="on" ;;
-        4) sp="75"; st="on" ;;
-        1) sp="100"; st="on" ;;
-        *) sp="NA"; st="NA" ;;
-    esac
+   if [[ $f1 -eq 0 || $f1 -eq 1 || $f1 -eq 2 || $f1 -eq 3 || $f1 -eq 4 ]]; then
+        if [ $f1 -eq 0 ]; then
+            sp="0"
+            st="off"
+        elif [ $f1 -eq 2 ]; then
+            sp="25"
+            st="on"
+        elif [ $f1 -eq 3 ]; then
+            sp="50"
+            st="on"
+        elif [ $f1 -eq 4 ]; then
+            sp="75"
+            st="on"
+        elif [ $f1 -eq 1 ]; then
+            sp="100"
+            st="on"
+        else
+            sp="NA"
+            st="NA"
+        fi
       
       #logfile
       if [ -f "$path_log" ]; then
