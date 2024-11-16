@@ -31,7 +31,7 @@ function read_values () {
     local f1=${f1:3:1}  
 
     # Return the values
- #   echo "$ts2 $t1_base $t1 $t2 $f1"
+    echo "$ts2 $t1_base $t1 $t2 $f1"
 }
 
 function fan_on () {
