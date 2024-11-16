@@ -35,7 +35,7 @@ function read_values() {
 
 function fan_on () {
    #cpu temperature and dynamic
-   local t1_base=$((${1%.*}))
+   local t1_base=$1
    if [ $t1_base -ge 51 -a $t1_base -le 55 ]; then
        i2ctools.i2cset -y 1 0x6C 1 2
    elif [ $t1_base -ge 56 -a $t1_base -le 60 ]; then
@@ -48,7 +48,7 @@ function fan_on () {
 }
 
 function fan_off () {
-   local t1_base=$((${1%.*}))
+   local t1_base=$1
    if [ $t1_base -le 45 ]; then
        sudo i2ctools.i2cset -y 1 0x6C 1 0
    fi
