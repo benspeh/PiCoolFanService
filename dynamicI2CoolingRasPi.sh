@@ -28,8 +28,9 @@ function read_values() {
     local t2=${t2:3:2}  
 
     local f1=`i2ctools.i2cget -y 1 0x6C 1 c`
+    echo "fi: '$f1'"
     local f1=${f1:4:1}  
- 
+   echo "fi: '$f1'"
 
     # Return the values
     echo "$ts2 $t1_base $t1 $t2 $f1"
