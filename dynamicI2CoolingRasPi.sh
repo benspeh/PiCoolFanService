@@ -99,15 +99,15 @@ i2ctools.i2cset -y 1 0x6C 0 1;
 while true
 do
 # Read values once at the start
-    read_values_output=$(read_values)
+    read_values_output=$(read_values);
     
     # Split the output into individual values
-    read -r ts2 t1_base t1 t2 f1 <<< "$read_values_output"
+    read -r ts2 t1_base t1 t2 f1 <<< "$read_values_output";
     
     # Use the measured values in the fan control and logging function
-    fan_on $t1_base
-    fan_off $t1_base
-    log $ts2 $t1 $t2 $f1
+    fan_on $t1_base;
+    fan_off $t1_base;
+    log $ts2 $t1 $t2 $f1;
     # sleep
     sleep 20s;
 
