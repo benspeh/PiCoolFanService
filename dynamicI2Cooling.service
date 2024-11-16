@@ -3,7 +3,7 @@ Description=High-Priority Raspberry PiCoolFan Service
 After=network.target
 
 [Service]
-ExecStart=/home/git-repositories/PiCoolFanService/dynamicI2CoolingRasPi.sh
+ExecStart=/bin/bash /home/git-repositories/PiCoolFanService/dynamicI2CoolingRasPi.sh
 WorkingDirectory=/home/git-repositories/PiCoolFanService
 Environment=PATH=/usr/bin:/usr/local/bin:/bin:/sbin:/snap/bin
 Restart=always
