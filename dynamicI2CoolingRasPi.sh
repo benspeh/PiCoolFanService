@@ -17,7 +17,6 @@ path_log="/home/logs/deviceTemperature.txt";
 temperature_cpu="/sys/class/thermal/thermal_zone0/temp";
 
 function read_values () {
-    local ts2=`date +%F_%H-%M-%S`
 
     local t1_get=$(cat "$temperature_cpu")
     local t1_base=$(expr $t1_get / 1000)
@@ -27,12 +26,11 @@ function read_values () {
     local t2=$(i2ctools.i2cget -y 1 0x6C 2 c)
     local t2=${t2#0x}  
 
-    local f1=$(i2ctools.i2cget -y 1 0x6C 1 c)
-    local f1=${f1:3:1}  
-
     # Return the values
-    echo "$ts2 $t1_base $t1 $t2 $f1"
+    echo "$ts2 $t1_base $t1 $t2"
 }
+
+
 
 function fan_on () {
     t1_base=$1
@@ -55,10 +53,11 @@ function fan_off () {
 }
 
 function log () {
-    local ts2=$1
+    local ts2=`date +%F_%H-%M-%S`
     local t1=$2
     local t2=$3
-    local f1=$4
+    local f1=$(i2ctools.i2cget -y 1 0x6C 1 c)
+    local f1=${f1:3:1}  
     local sp=""
     local st=""
 
@@ -89,12 +88,12 @@ do
     read_values_output=$(read_values);
    
     # Split the output into individual values
-    read -r ts2 t1_base t1 t2 f1 <<< "$read_values_output";
+    read -r ts2 t1_base t1 t2 <<< "$read_values_output";
     
     # Use the measured values in the fan control and logging function
     fan_on $t1_base;
     fan_off $t1_base;
-    log $ts2 $t1 $t2 $f1;
+    log $ts2 $t1 $t2;
     # sleep
     sleep 20s;
 
