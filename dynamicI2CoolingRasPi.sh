@@ -17,49 +17,43 @@ path_log="/home/logs/deviceTemperature.txt";
 temperature_cpu="/sys/class/thermal/thermal_zone0/temp";
 
 function read_values () {
-
+    local ts2=`date +%F_%H-%M-%S`
     local t1_get=$(cat "$temperature_cpu")
-    local t1_base=$(expr $t1_get / 1000)
-    
+    local t1_base=$(( t1_get / 1000 ))
     local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get / 1000 }")  # CPU temperature in °C
-    
     local t2=$(i2ctools.i2cget -y 1 0x6C 2 c)
-    local t2=${t2#0x}  
-
+    local t2=$(( 16#$t2_hex )) 
     # Return the values
-    echo "$t1_base $t1 $t2"
+    echo "$ts2 $t1_base $t1 $t2"
 }
 
-
-
 function fan_on () {
-    t1_base=$1
-    if [ $t1_base -ge 51 ] && [ $t1_base -le 55 ]; then
-        i2ctools.i2cset -y 1 0x6C 1 2  # Set fan speed to 25%
-    elif [ $t1_base -ge 56 ] && [ $t1_base -le 60 ]; then
-        i2ctools.i2cset -y 1 0x6C 1 3  # Set fan speed to 50%
-    elif [ $t1_base -ge 61 ] && [ $t1_base -le 65 ]; then
-        i2ctools.i2cset -y 1 0x6C 1 4  # Set fan speed to 75%
-    elif [ $t1_base -gt 65 ]; then
-        i2ctools.i2cset -y 1 0x6C 1 1  # Set fan speed to 100%
+    local t1_base=$1
+    if [[ $t1_base -ge 51 && $t1_base -le 55 ]]; then
+        i2ctools.i2cset -y 1 0x6C 1 2
+    elif [[ $t1_base -ge 56 && $t1_base -le 60 ]]; then
+        i2ctools.i2cset -y 1 0x6C 1 3
+    elif [[ $t1_base -ge 61 && $t1_base -le 65 ]]; then
+        i2ctools.i2cset -y 1 0x6C 1 4
+    elif [[ $t1_base -gt 65 ]]; then
+        i2ctools.i2cset -y 1 0x6C 1 1
     fi
 }
 
 function fan_off () {
-   local t1_base=$1
-   if [ $t1_base -le 45 ]; then
-       i2ctools.i2cset -y 1 0x6C 1 0
-   fi
+    local t1_base=$1
+    if [[ $t1_base -le 45 ]]; then
+        i2ctools.i2cset -y 1 0x6C 1 0
+    fi
 }
 
 function log () {
-    local ts2=`date +%F_%H-%M-%S`
-    local t1=$1
-    local t2=$2
-    local f1=$(i2ctools.i2cget -y 1 0x6C 1 c)
-    local f1=${f1:3:1}  
-    local sp=""
-    local st=""
+    local ts2=$1
+    local t1=$2
+    local t2=$3
+    local f1_hex=$(i2ctools.i2cget -y 1 0x6C 1 c)
+    local f1=$(( f1_hex )) 
+    local sp="" st=""
 
     case "$f1" in
         0) sp="0"; st="off" ;;
@@ -69,33 +63,26 @@ function log () {
         1) sp="100"; st="on" ;;
         *) sp="NA"; st="NA" ;;
     esac
-      
-    #logfile
     if [ -f "$path_log" ]; then
-       echo ''$ts2';'$t1';'$t2';'$st';'$sp%'' >>"$path_log"
-       echo ''$ts2';'$t1';'$t2';'$st';'$sp%''
+       printf '%s;%s;%s;%s;%s%%\n' "$ts2" "$t1" "$t2" "$st" "$sp" >> "$path_log"
+       printf '%s;%s;%s;%s;%s%%\n' "$ts2" "$t1" "$t2" "$st" "$sp"
     else
-       echo 'datetime;temp_cpu;temp_environment;status;speed' >>"$path_log"
+       printf 'datetime;temp_cpu;temp_environment;status;speed\n' >> "$path_log"
     fi
-}
 
 # set unconditional FAN ON
 i2ctools.i2cset -y 1 0x6C 0 1;
 
-while true
-do
+while true; do
     # Read values once at the start
     read_values_output=$(read_values);
     # Split the output into individual values
-    read -r t1_base t1 t2 <<< "$read_values_output";
-    
+    read -r ts2 t1_base t1 t2 <<< "$read_values_output";
     # Use the measured values in the fan control and logging function
     fan_on $t1_base;
     fan_off $t1_base;
-    log $t1 $t2;
+    log $ts2 $t1 $t2;
     # sleep
     sleep 20s;
-
 done
-
 exit 0
