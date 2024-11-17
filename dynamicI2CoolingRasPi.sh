@@ -23,7 +23,7 @@ function read_values () {
     local t1=$(awk "BEGIN { printf \"%.2f\", $t1_get / 1000 }")  # CPU temperature in °C
     local t2_hex=$(i2ctools.i2cget -y 1 0x6C 2 c)
     local t2=$(( t2_hex ))
-    printf "$t2" "t2_hex"
+    printf "$t2" "$t2_hex"
     # Return the values
     echo "$ts2 $t1_base $t1 $t2"
 }
