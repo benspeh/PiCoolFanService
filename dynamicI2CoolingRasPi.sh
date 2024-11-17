@@ -73,7 +73,8 @@ function log () {
 # set unconditional FAN ON
 i2ctools.i2cset -y 1 0x6C 0 1;
 
-while true; do
+while true 
+do
     # Read values once at the start
     read_values_output=$(read_values)
     # Split the output into individual values
